@@ -13,7 +13,7 @@ print(type(example_message))
 pprint(example_message.signals)
 
 # Create an arbitrary CAN message with specified signal values
-data = example_message.encode({'Temperature': 230, 'AverageRadius': 4, 'Enable': 1})
+data = example_message.encode({'Temperature': 250, 'AverageRadius': 4, 'Enable': 1})
 print("Encoded Data:", data)
 
 # Create a CAN message object
@@ -31,7 +31,7 @@ with open('test.bin', "wb") as f:
 # Read the raw CAN data from the binary file and decode it
 with open('test.bin', "rb") as f:
     m = f.read()
-
+    
 decoded_from_file = db.decode_message(message.arbitration_id, m)
 print("Decoded Data from File:", decoded_from_file)
 

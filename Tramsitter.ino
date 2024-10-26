@@ -4,18 +4,9 @@
 SoftwareSerial loraSerial(2, 3); // RX on D2, TX on D3
 
 unsigned long previousMillis = 0; // Stores the last time a message was sent
-const long interval = 3000; // Interval to wait between messages (3000 ms = 3 seconds)
+const long interval = 500; // Interval to wait between messages (3000 ms = 3 seconds)
 int messageIndex = 0; // Track which message to send
 
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * @brief Setup function to initialize the serial connection and the LoRa module
- *
- * This function sets up the hardware serial for debugging and the software serial
- * for communication with the LoRa module. It also waits for the LoRa module to
- * initialize properly.
- */
-/******  4132efdb-b37f-44bb-8c9c-de6b172bfb04  *******/
 void setup() {
   // Start hardware serial for debugging
   Serial.begin(115200);
@@ -36,16 +27,19 @@ void loop() {
     // Save the last time the message was sent
     previousMillis = currentMillis;
 
-    // Alternate between the two messages
+    // Alternate between the three messages
     if (messageIndex == 0) {
       sendMessage("'0xd0', '0xc8', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0'", 18);
+    } else if (messageIndex == 1) {
+      sendMessage("'0xd1', '0x4b', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0'", 18);
     } else {
-      sendMessage("'0xd1', '0x6', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0'", 18);
+      sendMessage("'0xd0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0'", 18);
     }
 
-    // Toggle the message index to switch between messages
-    messageIndex = 1 - messageIndex;
-  }
+    // Cycle through message indices: 0, 1, 2
+    messageIndex = (messageIndex + 1) % 3;
+}
+
 
   // You can add other code here to run while waiting for the next message
 }
